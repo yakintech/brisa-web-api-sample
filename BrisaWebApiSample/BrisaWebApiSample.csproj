@@ -11,13 +11,24 @@
     <None Remove="Swashbuckle.AspNetCore" />
     <None Remove="Models\" />
     <None Remove="FluentValidation.AspNetCore" />
+    <None Remove="Models\ORM\" />
+    <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="Microsoft.EntityFrameworkCore.Tools" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+    <Folder Include="Models\ORM\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
   </ItemGroup>
 </Project>

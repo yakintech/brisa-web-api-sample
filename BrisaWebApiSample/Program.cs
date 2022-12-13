@@ -30,3 +30,13 @@ app.MapControllers();
 
 app.Run();
 
+
+//94.73.170.48
+//dbBB8
+//userBB8
+//HYp58-_c9hC7zF_-
+
+//Core, SQL Server, Tools
+
+//add-migration 
+
