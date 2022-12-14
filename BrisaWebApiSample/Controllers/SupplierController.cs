@@ -1,13 +1,17 @@
 ﻿using System;
 using BrisaWebApiSample.Models;
+using BrisaWebApiSample.Models.Filter;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrisaWebApiSample.Controllers
 {
 
+
     public class SupplierController : BaseController
     {
 
+    
         [HttpGet]
         public IActionResult Get()
         {

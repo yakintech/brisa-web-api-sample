@@ -15,6 +15,8 @@ namespace BrisaWebApiSample.Models.ORM
 
 
         public DbSet<WebUser> WebUsers { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }
 

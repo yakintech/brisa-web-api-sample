@@ -11,7 +11,7 @@
     "BrisaWebApiSample": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:53652",
+      "applicationUrl": "http://localhost:7859",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

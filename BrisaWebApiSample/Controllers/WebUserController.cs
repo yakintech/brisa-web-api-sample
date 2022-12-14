@@ -1,6 +1,10 @@
 ﻿using System;
+using BrisaWebApiSample.Models.Dto.WebUser;
 using BrisaWebApiSample.Models.ORM;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using BrisaWebApiSample.Models.Filter;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrisaWebApiSample.Controllers
 {
@@ -8,25 +12,81 @@ namespace BrisaWebApiSample.Controllers
     {
 
         [HttpPost]
-        public IActionResult Add(WebUser webUser)
+        public IActionResult Add(CreateWebUserDto model)
         {
             BrisaContext brisaContext = new BrisaContext();
+
+
+            WebUser webUser = new WebUser();
+            webUser.Name = model.Name.Trim();
+            webUser.Surname = model.Surname.Trim();
+            webUser.Email = model.Email.ToLower();
+            webUser.CategoryId = model.CategoryId;
+
+            webUser.AddDate = DateTime.Now;
+            webUser.UpdateDate = DateTime.Now;
+            webUser.IsDeleted = false;
+
+
 
             brisaContext.WebUsers.Add(webUser);
             brisaContext.SaveChanges();
 
+
+
             return StatusCode(201, webUser);
         }
+
+
 
         [HttpGet]
         public IActionResult Get()
         {
             BrisaContext brisaContext = new BrisaContext();
-            //select * from WebUsers
-            var webusers = brisaContext.WebUsers.ToList();
 
-            return Ok(webusers);
+            //select * from WebUsers
+            //select * from WebUsers inner join Categories on WebUsers.CategoryId == Categories.ID
+            var webusers = brisaContext.WebUsers
+                    .Include(q => q.Category).ToList();
+
+
+
+            var webUsers2 = brisaContext.WebUsers.Select(q => new
+            {
+                q.Email,
+                q.Name,
+                q.Id
+            }).ToList();
+
+
+            var webUsers3 = brisaContext.WebUsers.Where(q => q.CategoryId == 1).ToList();
+
+            var webUsers4 = brisaContext.WebUsers.Where(q => q.Name.StartsWith("a")).ToList();
+
+            var webUsers5 = brisaContext.WebUsers.Where(q => q.CategoryId == 2).Take(100).ToList();
+
+            var webUsers6 = brisaContext.WebUsers.Where(q => q.CategoryId == 3)
+                .Skip(10)
+                .OrderByDescending(q => q.Name).ToList();
+
+
+            List<WebUserListDto> model = brisaContext.WebUsers
+                .Select(q => new WebUserListDto()
+                {
+                    Name = q.Name,
+                    Surname = q.Surname
+                }).ToList();
+                
+
+
+
+
+            return Ok(model);
         }
+
+
+
+
 
         [Route("{id}")]
         [HttpGet]
@@ -52,8 +112,9 @@ namespace BrisaWebApiSample.Controllers
             BrisaContext brisaContext = new BrisaContext();
 
             WebUser webUser = brisaContext.WebUsers.Find(id);
+            webUser.IsDeleted = true;
 
-            brisaContext.WebUsers.Remove(webUser);
+
             brisaContext.SaveChanges();
             
             return Ok();

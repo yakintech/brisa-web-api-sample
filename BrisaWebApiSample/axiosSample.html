@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <button onclick="login()">Login</button>
+    <button onclick="getSuppliers()">Get Suppliers</button>
+</body>
+
+<script>
+    let token = "";
+    function login() {
+
+        let user = {
+            email: "a@a.com",
+            password: "123"
+        }
+
+        axios.post("http://localhost:7859/api/login", user)
+            .then(res => {
+                token = res.data.accessToken;
+                console.log('Token ', token);
+            })
+
+    }
+
+    function getSuppliers() {
+        const instance = axios.create({
+            baseURL: 'http://localhost:7859/api/',
+            timeout: 1000,
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        instance.get('supplier')
+            .then(response => {
+                console.log('data ', response.data);
+            })
+    }</script>
+
+</html>
